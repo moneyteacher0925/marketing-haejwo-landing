@@ -11,16 +11,13 @@
 </head>
 <body>
 
-  <!-- 상단 고정 바 -->
-  <div class="topbar">
-    <span>⚡ 이번 달 TO 마감 임박 — 지금 신청하면 다음 달부터 진행 가능합니다</span>
-  </div>
+  <!-- 상단 띠배너 삭제됨 -->
 
   <!-- 네비게이션 -->
   <nav class="navbar">
     <div class="nav-inner">
       <div class="nav-logo">마케팅<span>해줘</span></div>
-      <a href="#cta" class="nav-cta">무료 상담 신청</a>
+      <!-- 네비 CTA 삭제 - 설득 후 CTA 노출 전략 -->
     </div>
   </nav>
 
@@ -33,15 +30,14 @@
         <span class="highlight">성과달성률 96.37%</span>
       </h1>
       <p class="hero-sub">
-        매월 예약 마감 — <strong>지금은 대기하셔야 됩니다.</strong>
+        <span id="currentMonth"></span>월 예약 마감 — <strong>지금은 대기하셔야 됩니다.</strong>
       </p>
       <p class="hero-question">
         마케팅을 모르는 직원들에게<br/>
         <strong>'내 사업체를 맡기실 건가요?'</strong>
       </p>
       <div class="hero-cta-wrap">
-        <button onclick="openModal()" class="btn-primary">무료 상담 신청 →</button>
-        <a href="#cases" class="btn-secondary">성공 사례 보기 ↓</a>
+        <a href="#cases" class="btn-secondary">아래 내용을 확인해보세요 ↓</a>
       </div>
 
       <!-- 비교표 -->
@@ -405,8 +401,8 @@
     </div>
   </footer>
 
-  <!-- 플로팅 버튼 -->
-  <div class="float-cta">
+  <!-- 플로팅 버튼 (스크롤 50% 이후 표시) -->
+  <div class="float-cta" id="floatCta" style="display:none">
     <button onclick="openModal()">💬 무료 상담</button>
   </div>
 
@@ -472,8 +468,21 @@
 
   <script>
     // ===== Google Apps Script 웹앱 URL =====
-    // 아래 URL을 Apps Script 배포 후 교체하세요
     const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx94Ny35oRwji0hD7EP9wj04DGdgYtneYmyYcKIiFfVeRVKQWk6dkJfNBSeIOc9h1nQ/exec';
+
+    // 현재 월 자동 표시
+    document.getElementById('currentMonth').textContent = new Date().getMonth() + 1;
+
+    // 플로팅 버튼: 스크롤 50% 이후에만 표시
+    window.addEventListener('scroll', function() {
+      const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+      const floatBtn = document.getElementById('floatCta');
+      if (scrollPercent > 0.4) {
+        floatBtn.style.display = 'block';
+      } else {
+        floatBtn.style.display = 'none';
+      }
+    });
 
     function openModal() {
       document.getElementById('modalOverlay').classList.add('active');
